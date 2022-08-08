@@ -1,3 +1,4 @@
+import { hashPasswordTransform } from 'src/shared/helper/crypto';
 import {
   Entity,
   PrimaryGeneratedColumn,
@@ -17,7 +18,9 @@ export class User {
   @Column({ unique: true })
   email: string;
 
-  @Column()
+  @Column({
+    transformer: hashPasswordTransform,
+  })
   password: string;
 
   @Column({ default: true })
