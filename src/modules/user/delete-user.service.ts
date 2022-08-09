@@ -15,6 +15,7 @@ export class DeleteUserService {
     if (!userExists) {
       throw new NotFoundException('Usuário não encontrado');
     }
-    return await this.userRepository.update(userExists, { active: false });
+    userExists.active = false;
+    return await this.userRepository.save(userExists);
   }
 }

@@ -20,6 +20,7 @@ export class User {
 
   @Column({
     transformer: hashPasswordTransform,
+    select: false,
   })
   password: string;
 

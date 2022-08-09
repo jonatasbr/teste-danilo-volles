@@ -54,10 +54,7 @@ export class UserController {
   }
 
   @Put(':id')
-  async update(
-    @Param('id', ParseUUIDPipe) id: string,
-    @Param('data') data: UpdateUserInput,
-  ) {
+  async update(@Param('id') id: string, @Body() data: UpdateUserInput) {
     const user = await this.updateUserByIdService.execute(id, data);
     return user;
   }

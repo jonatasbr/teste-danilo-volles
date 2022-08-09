@@ -1,6 +1,6 @@
-import { User } from '../../../modules/user/user.entity';
+import { User } from 'src/modules/user/user.entity';
 
-export class AuthOutput {
+export interface AuthOutput {
   user: User;
 
   token: string;

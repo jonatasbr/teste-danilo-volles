@@ -15,11 +15,15 @@ export class AuthenticateService {
 
   async execute(data: AuthInput): Promise<AuthOutput> {
     const { email, password } = data;
-    const user = await this.userRepository.findOneBy({ email });
+    const user = await this.userRepository.findOne({
+      select: ['id', 'email', 'password'],
+      where: { email, active: true },
+    });
     const passAgainstTimeAttack = user?.password || 'pass';
     const validPassword = await compare(password, passAgainstTimeAttack);
 
     if (user && validPassword) {
+      delete user.password;
       const token = 'token';
       return { user, token };
     }

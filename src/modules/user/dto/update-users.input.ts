@@ -22,11 +22,6 @@ export class UpdateUserInput {
   email?: string;
 
   @IsOptional()
-  @IsString()
-  @IsNotEmpty({ message: 'Caracteres inválidos' })
-  password?: string;
-
-  @IsOptional()
   @IsBoolean()
   active?: boolean;
 }

@@ -16,6 +16,7 @@ export class UpdateUserService {
     if (!userExists) {
       throw new NotFoundException('Usuário não encontrado');
     }
-    return await this.userRepository.update(userExists, { ...data });
+    const userUpdated = await this.userRepository.save({ ...data });
+    return userUpdated;
   }
 }
