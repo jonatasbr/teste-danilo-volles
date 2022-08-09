@@ -8,14 +8,16 @@ import {
   Patch,
   Post,
   Put,
+  UseGuards,
 } from '@nestjs/common';
+import { LocalAuthGuard } from '../auth/local-auth.guard';
 import { CreateUserService } from './create-user.service';
 import { DeleteUserService } from './delete-user.service';
-import { CreateUserInput } from './dto/create-users.input';
-import { UpdateUserInput } from './dto/update-users.input';
 import { GetUserByIdService } from './get-user-by-id.service';
 import { ListUserService } from './list-user.service';
 import { UpdateUserService } from './update-user.service';
+import { CreateUserInput } from './dto/create-users.input';
+import { UpdateUserInput } from './dto/update-users.input';
 
 @Controller('users')
 export class UserController {
@@ -28,6 +30,7 @@ export class UserController {
   ) {}
 
   @Get()
+  @UseGuards(LocalAuthGuard)
   async findAll(
     @Param('page')
     page = 1,

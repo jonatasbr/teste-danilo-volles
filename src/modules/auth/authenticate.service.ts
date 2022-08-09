@@ -1,4 +1,5 @@
 import { HttpException, HttpStatus, Injectable } from '@nestjs/common';
+import { JwtService } from '@nestjs/jwt';
 import { InjectRepository } from '@nestjs/typeorm';
 import { compare } from 'bcryptjs';
 import { Repository } from 'typeorm';
@@ -11,6 +12,7 @@ export class AuthenticateService {
   constructor(
     @InjectRepository(User)
     private userRepository: Repository<User>,
+    private jwtService: JwtService,
   ) {}
 
   async execute(data: AuthInput): Promise<AuthOutput> {
@@ -24,8 +26,12 @@ export class AuthenticateService {
 
     if (user && validPassword) {
       delete user.password;
-      const token = 'token';
-      return { user, token };
+      const payload = { email: user.email, sub: user.id };
+      const access_token = this.jwtService.sign(payload);
+      return {
+        access_token,
+        user,
+      };
     }
     throw new HttpException(
       {
