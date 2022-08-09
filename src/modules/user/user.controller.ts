@@ -8,9 +8,10 @@ import {
   Patch,
   Post,
   Put,
+  Query,
+  Request,
   UseGuards,
 } from '@nestjs/common';
-import { LocalAuthGuard } from '../auth/local-auth.guard';
 import { CreateUserService } from './create-user.service';
 import { DeleteUserService } from './delete-user.service';
 import { GetUserByIdService } from './get-user-by-id.service';
@@ -18,6 +19,8 @@ import { ListUserService } from './list-user.service';
 import { UpdateUserService } from './update-user.service';
 import { CreateUserInput } from './dto/create-users.input';
 import { UpdateUserInput } from './dto/update-users.input';
+import { JwtAuthGuard } from '../auth/jwt-auth.guard';
+import { LocalAuthGuard } from '../auth/local-auth.guard';
 
 @Controller('users')
 export class UserController {
@@ -30,11 +33,11 @@ export class UserController {
   ) {}
 
   @Get()
-  @UseGuards(LocalAuthGuard)
+  @UseGuards(JwtAuthGuard)
   async findAll(
-    @Param('page')
+    @Query('page')
     page = 1,
-    @Param('per_page')
+    @Query('per_page')
     per_page = 10,
   ) {
     const limit = per_page;
@@ -44,6 +47,7 @@ export class UserController {
   }
 
   @Get('/:id')
+  @UseGuards(JwtAuthGuard)
   async findOne(@Param('id', ParseUUIDPipe) id: string) {
     const user = await this.getUserByIdService.execute(id);
     return user;
@@ -57,12 +61,14 @@ export class UserController {
   }
 
   @Put(':id')
+  @UseGuards(JwtAuthGuard)
   async update(@Param('id') id: string, @Body() data: UpdateUserInput) {
     const user = await this.updateUserByIdService.execute(id, data);
     return user;
   }
 
   @Patch(':id')
+  @UseGuards(JwtAuthGuard)
   async remove(@Param('id', ParseUUIDPipe) id: string) {
     const user = await this.deleteUserByIdService.execute(id);
     return user;

@@ -23,6 +23,8 @@ export class CreateUserService {
         HttpStatus.FORBIDDEN,
       );
     }
-    return await this.userRepository.save(data);
+    const user = await this.userRepository.save(data);
+    delete user.password;
+    return user;
   }
 }
