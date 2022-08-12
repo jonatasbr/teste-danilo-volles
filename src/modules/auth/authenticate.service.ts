@@ -1,18 +1,20 @@
 import { HttpException, HttpStatus, Injectable } from '@nestjs/common';
-import { JwtService } from '@nestjs/jwt';
 import { InjectRepository } from '@nestjs/typeorm';
 import { compare } from 'bcryptjs';
 import { Repository } from 'typeorm';
 import { User } from '../user/user.entity';
 import { AuthInput } from './dto/auth.input';
 import { AuthOutput } from './dto/auth.ouput';
+import { GetAccessTokenService } from './get-access-token.service';
+import { GetRefreshTokenService } from './get-refresh-token.service';
 
 @Injectable()
 export class AuthenticateService {
   constructor(
     @InjectRepository(User)
     private userRepository: Repository<User>,
-    private jwtService: JwtService,
+    private getAccessToken: GetAccessTokenService,
+    private getRefreshTokenService: GetRefreshTokenService,
   ) {}
 
   async execute(data: AuthInput): Promise<AuthOutput> {
@@ -26,11 +28,18 @@ export class AuthenticateService {
 
     if (user && validPassword) {
       delete user.password;
-      const payload = { email: user.email, sub: user.id };
-      const access_token = this.jwtService.sign(payload);
+      const access_token = await this.getAccessToken.execute(
+        user.email,
+        user.id,
+      );
+      const refresh_token = await this.getRefreshTokenService.execute(
+        user.email,
+        user.id,
+      );
       return {
-        access_token,
         user,
+        access_token,
+        refresh_token,
       };
     }
     throw new HttpException(
