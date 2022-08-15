@@ -33,6 +33,7 @@ import { AuthModule } from './modules/auth/auth.module';
       database: process.env.DB_POSTGRESQL_DBNAME,
       entities: ['dist/**/*.entity{.ts,.js}'],
       synchronize: true,
+      logging: false,
     }),
     UserModule,
     AuthModule,

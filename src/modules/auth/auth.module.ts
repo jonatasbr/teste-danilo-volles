@@ -10,6 +10,8 @@ import { JwtStrategy } from './jwt.strategy';
 import { LocalStrategy } from './local.strategy';
 import { UserToken } from './user-token.entity';
 import { GetUserByIdService } from '../user/get-user-by-id.service';
+import { GetAccessTokenService } from './get-access-token.service';
+import { GetRefreshTokenService } from './get-refresh-token.service';
 
 @Module({
   imports: [
@@ -24,6 +26,8 @@ import { GetUserByIdService } from '../user/get-user-by-id.service';
     JwtStrategy,
     RefreshTokenService,
     GetUserByIdService,
+    GetAccessTokenService,
+    GetRefreshTokenService,
   ],
 })
 export class AuthModule {}

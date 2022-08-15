@@ -20,7 +20,6 @@ import { UpdateUserService } from './update-user.service';
 import { CreateUserInput } from './dto/create-users.input';
 import { UpdateUserInput } from './dto/update-users.input';
 import { JwtAuthGuard } from '../auth/jwt-auth.guard';
-import { LocalAuthGuard } from '../auth/local-auth.guard';
 
 @Controller('users')
 export class UserController {
@@ -31,6 +30,12 @@ export class UserController {
     private updateUserByIdService: UpdateUserService,
     private deleteUserByIdService: DeleteUserService,
   ) {}
+
+  @UseGuards(JwtAuthGuard)
+  @Get('profile')
+  async getProfile(@Request() req: any) {
+    return await this.getUserByIdService.execute(req.user.id);
+  }
 
   @Get()
   @UseGuards(JwtAuthGuard)
