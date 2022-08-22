@@ -10,6 +10,7 @@ export class GetAccessTokenService {
   ) {}
 
   execute(email: string, user_id: string) {
+    console.log(this.configService.get('ACCESS_TOKEN_SECRET'));
     const payload = { email, sub: user_id };
     const access_token = this.jwtService.sign(payload, {
       secret: this.configService.get('ACCESS_TOKEN_SECRET'),
