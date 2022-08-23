@@ -12,14 +12,14 @@ import {
   Request,
   UseGuards,
 } from '@nestjs/common';
-import { CreateUserService } from './create-user.service';
-import { DeleteUserService } from './delete-user.service';
-import { GetUserByIdService } from './get-user-by-id.service';
-import { ListUserService } from './list-user.service';
-import { UpdateUserService } from './update-user.service';
-import { CreateUserInput } from './dto/create-users.input';
-import { UpdateUserInput } from './dto/update-users.input';
-import { JwtAuthGuard } from '../auth/jwt-auth.guard';
+import { CreateUserService } from '../service/create-user.service';
+import { DeleteUserService } from '../service/delete-user.service';
+import { GetUserByIdService } from '../service/get-user-by-id.service';
+import { ListUserService } from '../service/list-user.service';
+import { UpdateUserService } from '../service/update-user.service';
+import { CreateUserInput } from '../dto/create-users.input';
+import { UpdateUserInput } from '../dto/update-users.input';
+import { JwtAuthGuard } from '../../auth/guard/jwt-auth.guard';
 
 @Controller('users')
 export class UserController {

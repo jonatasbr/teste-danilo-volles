@@ -3,12 +3,12 @@ import { ConfigService } from '@nestjs/config';
 import { JwtService } from '@nestjs/jwt';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
-import { GetUserByIdService } from '../user/get-user-by-id.service';
-import { User } from '../user/user.entity';
-import { AuthOutput } from './dto/auth.ouput';
+import { GetUserByIdService } from '../../user/service/get-user-by-id.service';
+import { User } from '../../user/entity/user.entity';
+import { AuthOutput } from '../dto/auth.ouput';
 import { GetAccessTokenService } from './get-access-token.service';
 import { GetRefreshTokenService } from './get-refresh-token.service';
-import { UserToken } from './user-token.entity';
+import { UserToken } from '../entity/user-token.entity';
 
 @Injectable()
 export class RefreshTokenService {

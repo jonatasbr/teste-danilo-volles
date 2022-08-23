@@ -2,16 +2,15 @@ import { Module } from '@nestjs/common';
 import { JwtModule } from '@nestjs/jwt';
 import { PassportModule } from '@nestjs/passport';
 import { TypeOrmModule } from '@nestjs/typeorm';
-import { User } from '../user/user.entity';
-import { AuthController } from './auth.controller';
-import { AuthenticateService } from './authenticate.service';
-import { RefreshTokenService } from './refresh-token.service';
-import { JwtStrategy } from './jwt.strategy';
-import { LocalStrategy } from './local.strategy';
-import { UserToken } from './user-token.entity';
-import { GetUserByIdService } from '../user/get-user-by-id.service';
-import { GetAccessTokenService } from './get-access-token.service';
-import { GetRefreshTokenService } from './get-refresh-token.service';
+import { User } from '../user/entity/user.entity';
+import { AuthController } from './controller/auth.controller';
+import { JwtStrategy } from './strategy/jwt.strategy';
+import { UserToken } from './entity/user-token.entity';
+import { GetUserByIdService } from '../user/service/get-user-by-id.service';
+import { AuthenticateService } from './service/authenticate.service';
+import { RefreshTokenService } from './service/refresh-token.service';
+import { GetAccessTokenService } from './service/get-access-token.service';
+import { GetRefreshTokenService } from './service/get-refresh-token.service';
 
 @Module({
   imports: [
@@ -22,7 +21,6 @@ import { GetRefreshTokenService } from './get-refresh-token.service';
   controllers: [AuthController],
   providers: [
     AuthenticateService,
-    LocalStrategy,
     JwtStrategy,
     RefreshTokenService,
     GetUserByIdService,

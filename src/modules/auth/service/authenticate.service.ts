@@ -2,12 +2,12 @@ import { HttpException, HttpStatus, Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { compare } from 'bcryptjs';
 import { Repository } from 'typeorm';
-import { User } from '../user/user.entity';
-import { AuthInput } from './dto/auth.input';
-import { AuthOutput } from './dto/auth.ouput';
+import { User } from '../../user/entity/user.entity';
+import { AuthInput } from '../dto/auth.input';
+import { AuthOutput } from '../dto/auth.ouput';
+import { UserToken } from '../entity/user-token.entity';
 import { GetAccessTokenService } from './get-access-token.service';
 import { GetRefreshTokenService } from './get-refresh-token.service';
-import { UserToken } from './user-token.entity';
 
 @Injectable()
 export class AuthenticateService {

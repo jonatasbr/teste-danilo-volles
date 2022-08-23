@@ -1,12 +1,12 @@
 import { Module } from '@nestjs/common';
 import { TypeOrmModule } from '@nestjs/typeorm';
-import { UserController } from './user.controller';
-import { User } from './user.entity';
-import { CreateUserService } from './create-user.service';
-import { ListUserService } from './list-user.service';
-import { GetUserByIdService } from './get-user-by-id.service';
-import { UpdateUserService } from './update-user.service';
-import { DeleteUserService } from './delete-user.service';
+import { UserController } from './controller/user.controller';
+import { User } from './entity/user.entity';
+import { CreateUserService } from './service/create-user.service';
+import { ListUserService } from './service/list-user.service';
+import { GetUserByIdService } from './service/get-user-by-id.service';
+import { UpdateUserService } from './service/update-user.service';
+import { DeleteUserService } from './service/delete-user.service';
 
 @Module({
   imports: [TypeOrmModule.forFeature([User])],

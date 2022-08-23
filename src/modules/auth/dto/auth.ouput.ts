@@ -1,4 +1,4 @@
-import { User } from 'src/modules/user/user.entity';
+import { User } from 'src/modules/user/entity/user.entity';
 
 export interface AuthOutput {
   user?: User;

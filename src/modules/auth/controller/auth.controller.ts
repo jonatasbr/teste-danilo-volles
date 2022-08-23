@@ -1,8 +1,8 @@
 import { Body, Controller, HttpCode, Post } from '@nestjs/common';
-import { AuthenticateService } from './authenticate.service';
-import { AuthInput } from './dto/auth.input';
-import { RefreshTokenInput } from './dto/refresh-token.input';
-import { RefreshTokenService } from './refresh-token.service';
+import { AuthInput } from '../dto/auth.input';
+import { RefreshTokenInput } from '../dto/refresh-token.input';
+import { AuthenticateService } from '../service/authenticate.service';
+import { RefreshTokenService } from '../service/refresh-token.service';
 
 @Controller('auth')
 export class AuthController {
