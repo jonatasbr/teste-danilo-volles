@@ -12,9 +12,14 @@ export class GetUserByIdService {
 
   async execute(id: string) {
     const user = await this.userRepository.findOneBy({ id });
+
     if (!user) {
       throw new NotFoundException('Usuário não encontrado');
     }
-    return user;
+    return {
+      email: user.email,
+      roles: ['administrator'],
+      permissions: ['users.list', 'users.create'],
+    };
   }
 }

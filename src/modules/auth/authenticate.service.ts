@@ -31,13 +31,22 @@ export class AuthenticateService {
 
     if (user && validPassword) {
       delete user.password;
-      const access_token = this.getAccessTokenService.execute(email, user.id);
+      const roles = ['administrator'];
+      const permissions = ['users.list', 'users.create'];
+      const access_token = this.getAccessTokenService.execute(
+        email,
+        user.id,
+        roles,
+        permissions,
+      );
       const refresh_token = this.getRefreshTokenService.execute(email);
       await this.saveRefreshToken(refresh_token, user.id);
       return {
-        user,
+        email: user.email,
         access_token,
         refresh_token,
+        roles,
+        permissions,
       };
     }
     throw new HttpException(

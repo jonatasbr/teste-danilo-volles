@@ -11,10 +11,11 @@ export class AuthController {
     private refreshTokenService: RefreshTokenService,
   ) {}
 
-  @HttpCode(200)
   @Post('sign-in')
+  @HttpCode(200)
   async signIn(@Body() data: AuthInput) {
-    return await this.authenticateService.execute(data);
+    const output = await this.authenticateService.execute(data);
+    return output;
   }
 
   @HttpCode(200)

@@ -13,10 +13,11 @@ export class JwtAuthGuard extends AuthGuard('jwt') {
     if (info instanceof TokenExpiredError) {
       throw new HttpException(
         {
-          status: HttpStatus.FORBIDDEN,
-          error: 'Token expired',
+          status: HttpStatus.UNAUTHORIZED,
+          code: 'access-token.expired',
+          message: 'Token expirou',
         },
-        HttpStatus.FORBIDDEN,
+        HttpStatus.UNAUTHORIZED,
       );
     }
     if (err || !user) {
