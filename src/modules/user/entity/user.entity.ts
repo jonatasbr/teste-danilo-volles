@@ -1,4 +1,4 @@
-import { hashPasswordTransform } from 'src/shared/helper/crypto';
+import { hashPasswordTransform } from '../../../shared/helper/crypto';
 import {
   Entity,
   PrimaryGeneratedColumn,
