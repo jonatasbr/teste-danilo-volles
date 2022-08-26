@@ -1,11 +1,8 @@
 import { Injectable, NotFoundException } from '@nestjs/common';
-import { ConfigService } from '@nestjs/config';
-import { JwtService } from '@nestjs/jwt';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
-import { GetUserByIdService } from '../../user/service/get-user-by-id.service';
 import { User } from '../../user/entity/user.entity';
-import { AuthOutput } from '../dto/auth.ouput';
+import { AuthOutput } from '../dto/auth.dto';
 import { GetAccessTokenService } from './get-access-token.service';
 import { GetRefreshTokenService } from './get-refresh-token.service';
 import { UserToken } from '../entity/user-token.entity';
@@ -13,11 +10,8 @@ import { UserToken } from '../entity/user-token.entity';
 @Injectable()
 export class RefreshTokenService {
   constructor(
-    private jwtService: JwtService,
-    private configService: ConfigService,
     private getAccessTokenService: GetAccessTokenService,
     private getRefreshTokenService: GetRefreshTokenService,
-    private getUserByIdService: GetUserByIdService,
     @InjectRepository(User)
     private userRepository: Repository<User>,
     @InjectRepository(UserToken)

@@ -1,6 +1,6 @@
 import { Body, Controller, HttpCode, Post } from '@nestjs/common';
-import { AuthInput } from '../dto/auth.input';
-import { RefreshTokenInput } from '../dto/refresh-token.input';
+import { AuthInput } from '../dto/auth.dto';
+import { RefreshTokenInput } from '../dto/refresh-token.dto';
 import { AuthenticateService } from '../service/authenticate.service';
 import { RefreshTokenService } from '../service/refresh-token.service';
 
