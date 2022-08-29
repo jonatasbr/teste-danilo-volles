@@ -22,7 +22,7 @@ export class AuthenticateService {
   async execute(data: AuthInput): Promise<AuthOutput> {
     const { email, password } = data;
     const user = await this.userRepository.findOne({
-      select: ['id', 'email', 'password'],
+      select: ['id', 'email', 'password', 'roles', 'permissions'],
       where: { email, active: true },
     });
     const passAgainstTimeAttack = user?.password || 'pass';
@@ -30,22 +30,13 @@ export class AuthenticateService {
 
     if (user && validPassword) {
       delete user.password;
-      const roles = ['administrator'];
-      const permissions = ['users.list', 'users.create'];
-      const access_token = this.getAccessTokenService.execute(
-        email,
-        user.id,
-        roles,
-        permissions,
-      );
+      const access_token = this.getAccessTokenService.execute(user);
       const refresh_token = this.getRefreshTokenService.execute(email);
       await this.saveRefreshToken(refresh_token, user.id);
       return {
-        email: user.email,
+        user,
         access_token,
         refresh_token,
-        roles,
-        permissions,
       };
     }
     throw new HttpException(

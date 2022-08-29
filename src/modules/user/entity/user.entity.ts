@@ -1,4 +1,3 @@
-import { hashPasswordTransform } from '../../../shared/helper/crypto';
 import {
   Entity,
   PrimaryGeneratedColumn,
@@ -6,6 +5,9 @@ import {
   CreateDateColumn,
   UpdateDateColumn,
 } from 'typeorm';
+import { hashPasswordTransform } from '../../../shared/helper/crypto';
+import { Permission } from './permission.enum';
+import { Role } from './role.enum';
 
 @Entity('users')
 export class User {
@@ -32,4 +34,18 @@ export class User {
 
   @UpdateDateColumn()
   updated_at: Date;
+
+  @Column('enum', {
+    array: true,
+    enum: Object.values(Role),
+    default: [Role.user],
+  })
+  roles: Role[];
+
+  @Column('enum', {
+    array: true,
+    enum: Object.values(Permission),
+    default: [Permission.user_get],
+  })
+  permissions: Permission[];
 }

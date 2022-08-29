@@ -16,10 +16,6 @@ export class GetUserByIdService {
     if (!user) {
       throw new NotFoundException('Usuário não encontrado');
     }
-    return {
-      email: user.email,
-      roles: ['administrator'],
-      permissions: ['users.list', 'users.create'],
-    };
+    return user;
   }
 }

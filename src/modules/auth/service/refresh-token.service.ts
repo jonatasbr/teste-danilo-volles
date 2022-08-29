@@ -33,15 +33,7 @@ export class RefreshTokenService {
     }
 
     await this.userTokenRepository.delete(user_token.id);
-
-    const roles = ['administrator'];
-    const permissions = ['users.list', 'users.create'];
-    const access_token = this.getAccessTokenService.execute(
-      user.email,
-      user.id,
-      roles,
-      permissions,
-    );
+    const access_token = this.getAccessTokenService.execute(user);
     const refresh_token = this.getRefreshTokenService.execute(user.email);
     const new_user_token = this.userTokenRepository.create({
       refresh_token,
@@ -50,11 +42,9 @@ export class RefreshTokenService {
     await this.userTokenRepository.save(new_user_token);
 
     return {
-      email: user.email,
+      user,
       access_token,
       refresh_token,
-      roles,
-      permissions,
     };
   }
 }
