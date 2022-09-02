@@ -23,7 +23,7 @@ import { UpdateUserInput } from '../dto/update-users.dto';
 import { JwtAuthGuard } from '../../auth/guard/jwt-auth.guard';
 import { User } from '../entity/user.entity';
 import { RoleGuard } from '../guard/role.guard';
-import { Role } from '../entity/role.enum';
+import { Role } from '../enum/role.enum';
 
 @Controller('users')
 @ApiTags('users')
@@ -48,13 +48,11 @@ export class UserController {
     description: 'Usuário não encontrado',
   })
   async getProfile(@Request() req: any) {
-    console.log('server');
-    console.log(req.user);
     return await this.getUserByIdService.execute(req.user.id);
   }
 
   @Get()
-  @UseGuards(JwtAuthGuard, RoleGuard(Role.user))
+  @UseGuards(JwtAuthGuard, RoleGuard(Role.role_admin_user))
   @ApiResponse({
     status: 200,
     description: 'Lista de usuários',
@@ -73,7 +71,7 @@ export class UserController {
   }
 
   @Get('/:id')
-  @UseGuards(JwtAuthGuard)
+  @UseGuards(JwtAuthGuard, RoleGuard(Role.role_admin_user))
   @ApiParam({
     name: 'id',
     required: true,
@@ -109,7 +107,11 @@ export class UserController {
   }
 
   @Put(':id')
-  @UseGuards(JwtAuthGuard)
+  @UseGuards(
+    JwtAuthGuard,
+    RoleGuard(Role.role_admin_user),
+    RoleGuard(Role.role_user),
+  )
   @ApiParam({
     name: 'id',
     required: true,
@@ -132,7 +134,7 @@ export class UserController {
   }
 
   @Delete(':id')
-  @UseGuards(JwtAuthGuard)
+  @UseGuards(JwtAuthGuard, RoleGuard(Role.role_admin_user))
   @ApiParam({
     name: 'id',
     required: true,
