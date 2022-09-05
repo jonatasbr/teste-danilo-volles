@@ -22,6 +22,7 @@ export class AuthController {
   @Post('refresh-token')
   async refreshToken(@Body() data: RefreshTokenInput) {
     const { refresh_token } = data;
+
     return await this.refreshTokenService.execute(refresh_token);
   }
 }

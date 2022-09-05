@@ -109,8 +109,8 @@ export class UserController {
   @Put(':id')
   @UseGuards(
     JwtAuthGuard,
-    RoleGuard(Role.role_admin_user),
-    RoleGuard(Role.role_user),
+    // RoleGuard(Role.role_admin_user),
+    // RoleGuard(Role.role_user),
   )
   @ApiParam({
     name: 'id',

@@ -19,20 +19,22 @@ export class RefreshTokenService {
   ) {}
 
   async execute(token: string): Promise<AuthOutput> {
-    const user_token = await this.userTokenRepository.findOneBy({
-      refresh_token: token,
+    const user_token = await this.userTokenRepository.find({
+      where: {
+        refresh_token: token,
+      },
     });
     if (!user_token) {
       throw new NotFoundException('Refresh token not found');
     }
     const user = await this.userRepository.findOneBy({
-      id: user_token.user_id,
+      id: user_token[0].user_id,
     });
     if (!user) {
       throw new NotFoundException('Refresh token not found');
     }
 
-    await this.userTokenRepository.delete(user_token.id);
+    await this.userTokenRepository.delete(user_token[0].id);
     const access_token = this.getAccessTokenService.execute(user);
     const refresh_token = this.getRefreshTokenService.execute(user.email);
     const new_user_token = this.userTokenRepository.create({
