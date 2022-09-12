@@ -48,6 +48,8 @@ export class UserController {
     description: 'Usuário não encontrado',
   })
   async getProfile(@Request() req: any) {
+    console.log('PROFIIIILLEEEE');
+    console.log(req);
     return await this.getUserByIdService.execute(req.user.id);
   }
 

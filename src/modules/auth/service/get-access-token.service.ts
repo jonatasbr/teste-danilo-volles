@@ -12,6 +12,8 @@ export class GetAccessTokenService {
 
   execute(user: User) {
     const payload = { user };
+    console.log('ACCESS TOKEN');
+    console.log(payload);
     const access_token = this.jwtService.sign(payload, {
       secret: this.configService.get('ACCESS_TOKEN_SECRET'),
       expiresIn: this.configService.get('TOKEN_EXPIRATION_TIME'),
